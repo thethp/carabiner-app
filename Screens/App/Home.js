@@ -17,6 +17,7 @@ export default class HomeScreen extends React.Component {
         {/* # TO-DO: Onboarding? */}
         {/* # TO-DO: check props for hooking up, check api? database? for hooking up */}
         {/* # TO-DO: If hooking up, show details and "im done" / "send for help" buttons */}
+        {/* # TO-DO: If hooking up, add option to update location */}
         {/* # TO-DO: If no contacts only show an add contact button */}
         {/* # TO-DO: Support */}
         {/* # TO-DO: Ads -> Subscription */}

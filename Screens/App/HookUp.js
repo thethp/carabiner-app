@@ -15,8 +15,9 @@ export default class HookUpScreen extends React.Component {
     };
   }
 
+  // # TO-DO : Make all event functions same format
   __onPressSubmit = () => {
-    {/* # TO-DO: Store data */}
+    // # TO-DO: Store data 
     startHookupTimer();
 
     this.props.navigation.navigate('Home', { hookingUp: true })

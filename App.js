@@ -12,7 +12,8 @@ import LogInSignUp from './Screens/Auth/LogInSignUp';
 import ForgotMyPassword from './Screens/Auth/ForgotMyPassword';
 
 // #TO-DO : different start screen if no friends?
-// #TO-DO: have they logged in?
+// #TO-DO : have they logged in?
+// #TO-DO : add app icons to app.json
 
 const AppStack = createStackNavigator(
   {
@@ -47,6 +48,7 @@ const AppContainer = createAppContainer(switchNavigator);
 
 export default class App extends React.Component {
   componentDidMount() {
+    // # TO-DO : Should this be after log in so that token is associated with user?
     registerForPushNotificationsAsync(this.handleNotification);
   }
 

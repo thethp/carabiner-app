@@ -27,6 +27,7 @@ export const startHookupTimer = () => {
 
 sendAlert = () => {
   //# TODO : make this an actual notification
+  //# TODO : add correct imagery to this icon
   //# TODO : should this all be from an API? what happens if they close the app?
   this.sendMessage('OK');
 }

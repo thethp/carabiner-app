@@ -36,7 +36,8 @@ export default class LogInSignUp extends React.Component {
     //# TO-DO : Figure out how to give users individual tokens
     //# TO-DO : Should tokens time out? How does that work
     await AsyncStorage.setItem('userToken', 'itstillertime');
-    await AsyncStorage.setItem('firstLaunch', false);
+    //# TO-DO : Make the code below work
+    //await AsyncStorage.setItem('firstLaunch', false);
 
     this.props.navigation.navigate('App');
   }
@@ -64,7 +65,7 @@ export default class LogInSignUp extends React.Component {
         />
 
         {/*  # TODO: button should be a primary style */}
-        <TouchableHighlight onClick={this.loginToApp}>
+        <TouchableHighlight onPress={this.loginToApp}>
           <View style={styles.button}>
             <Text>Login</Text>
           </View>

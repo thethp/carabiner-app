@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableHighlight, View } from 'react-native';
-import { getColor } from '../../Utils/Utils';
+import { getContacts, getColor } from '../../Utils/Utils';
 
 export default class ManageFriendsScreen extends React.Component {
 
@@ -13,14 +13,17 @@ export default class ManageFriendsScreen extends React.Component {
   }
 
   componentDidMount = () => {
+    //# TO-DO : this should be called even on the return to this page...
     this.getFriends();
   }
 
-  getFriends = () => {
-    //# TODO: this should pull from a database and/or api
-    let friendsDeets = [{ name: 'Madison', phone: '864-918-5276', uuid: '00001'}, { name: 'Jeff', phone: '864-918-5276', uuid: '00002'}];
-
-    this.setState({friends: friendsDeets});
+  getFriends = async () => {
+    //# TO-DO : Show any errors to user
+    //# TO-DO : If 0 contacts, perhaps auto direct to add contact page, with a note
+    getContacts((_contacts) => {
+      this.setState({friends: _contacts});
+    });
+    
   }
 
   renderFriends = () => {
@@ -35,7 +38,7 @@ export default class ManageFriendsScreen extends React.Component {
       )
     });
 
-    return friends
+    return friends;
   }
 
   render() {

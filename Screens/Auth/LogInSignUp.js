@@ -71,7 +71,8 @@ export default class LogInSignUp extends React.Component {
   }
 
   registerWithApp = () => {
-    //validate email
+    //# TO-DO : validate email
+    //#TO-DO : validate fields arent empty
     if(this.state.login.confirm_password == this.state.login.password) {
       authUser("registration", this.state.login.username, this.state.login.password, this.signInCallback);
     } else {
@@ -83,6 +84,7 @@ export default class LogInSignUp extends React.Component {
     //# TO-DO : If registration, go to new user stuff, maybe use a token
 
     if(_isSuccessful) {
+      console.log('User added and/or signed in');
       this.props.navigation.navigate('App');
     } else {
       //# TODO : make this show to user too

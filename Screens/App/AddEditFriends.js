@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, TextInput, TouchableHighlight, View } from 'react-native';
+import { addEditContact, getContact } from '../../Utils/Utils';
 
 export default class AddEditFriendsScreen extends React.Component {
 
@@ -27,11 +28,16 @@ export default class AddEditFriendsScreen extends React.Component {
     }
   }
 
-  getContact = (uuid) => {
-    //# TODO: this should pull from a database and/or api based on the uuid
-    let friendDeets = { name: 'Madison', phone: '864-918-5276', confirmed: true, uuid: '00001'};
-
-    this.setState({friend: friendDeets});
+  getContact = (_uuid) => {
+    //# TODO: format phone number prettily
+    //# TODO: should there be a loading screen here/on other loading pages?
+    getContact(_uuid, (_response) => {
+      if(_response.success) {
+        this.setState({friend: _response.contact});
+      } else {
+        //# TO-DO : Show user something went wrong?
+      }
+    });
   }
 
   updateContact = (key, data) => {
@@ -44,10 +50,25 @@ export default class AddEditFriendsScreen extends React.Component {
   }
 
   submitContact = () => {
-    //#TO-DO: If edit patch, if add post, api or local database, depending on what we're using
     //#TO-DO: validate phone number
+    //#TO-DO: format phone number as just digits
     //#TO-DO: Send text to person to have them confirm their status as a contact
-    this.props.navigation.navigate('ManageFriends');
+    //#TO-DO : on confirmation of the above, mark them as confirmed
+    //#TO-DO : validate fields arent empty
+
+    addEditContact(this.state.friend, this.addEditContactCallback);
+  }
+
+  addEditContactCallback = (_isSuccessful, _message='') => {
+    if(_isSuccessful) {
+      console.log('Contact added and/or updated.');
+      this.props.navigation.navigate('ManageFriends');
+
+    } else {
+      //# TODO : make this show to user too
+      console.log('There was an error updating your contacts: ' + _message);
+
+    }
   }
 
   renderConfirmedStatus = () => {

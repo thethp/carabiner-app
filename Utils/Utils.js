@@ -34,8 +34,37 @@ sendAlert = () => {
 
 
 
-//NOTIFICATION RELATED THINGS
+//API RELATED THINGS
 const API_BASE  = 'http://carabiner.xyz';
+
+// Add or Edit Contact
+export const addEditContact = async (_contactDetails, _callback) => {
+  let uuid = await AsyncStorage.getItem('uuid');
+
+  fetch(API_BASE + '/addEditContact', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+
+      uuid: uuid,
+      contactDetails: _contactDetails
+
+    }),
+  })
+  .then((response) => response.json())
+  .then(async (response) => {
+
+    if(response.success) {
+      _callback(true);
+    } else {
+      _callback(false, response.message);
+    }
+  });
+}
+
 // Register or Sign In User
 export const authUser = async (_signInType, _username, _password, _callback) => {
   const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
@@ -45,7 +74,6 @@ export const authUser = async (_signInType, _username, _password, _callback) => 
   }
 
   let token = await Notifications.getExpoPushTokenAsync();
-  //#TO-DO : make post etc fetches into functions
 
   let apiURLExtension = (_signInType == "registration") ? '/register' : '/login';
 
@@ -69,7 +97,7 @@ export const authUser = async (_signInType, _username, _password, _callback) => 
   })
   .then((response) => response.json())
   .then(async (response) => {
-    console.log('We got a response: ', response);
+
     if(response.success) {
       await AsyncStorage.setItem('uuid', response.uuid);
       _callback(true);
@@ -77,6 +105,33 @@ export const authUser = async (_signInType, _username, _password, _callback) => 
       _callback(false, response.message);
     }
     //# TO-DO : Should tokens time out? How does that work
+  });
+}
+
+// Get Contact
+export const getContact = async (_contactUuid, _callback) => {
+  let uuid = await AsyncStorage.getItem('uuid');
+
+  fetch(API_BASE + '/getContacts/' + uuid + '/specificContact/' + _contactUuid)
+  .then((response) => response.json())
+  .then((response) => {
+    console.log('We got a response: ', response);
+    _callback(response);
+  });
+}
+
+// Get Contacts
+export const getContacts = async (_callback) => {
+  let uuid = await AsyncStorage.getItem('uuid');
+
+  fetch(API_BASE + '/getContacts/' + uuid)
+  .then((response) => response.json())
+  .then((response) => {
+    if(response.success) {
+      _callback(response.contacts);
+    } else {
+      _callback([]);
+    }
   });
 }
 

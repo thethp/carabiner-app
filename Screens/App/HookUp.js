@@ -16,6 +16,7 @@ export default class HookUpScreen extends React.Component {
   }
 
   // # TO-DO : Make all event functions same format
+  //#TO-DO : validate fields arent empty
   __onPressSubmit = () => {
     // # TO-DO: Store data 
     startHookupTimer();

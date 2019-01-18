@@ -66,19 +66,20 @@ export default class LogInSignUp extends React.Component {
   }
 
   loginToApp = () => {
-
+    //validate email
+    authUser("login", this.state.login.username, this.state.login.password, this.signInCallback);
   }
 
   registerWithApp = () => {
     //validate email
     if(this.state.login.confirm_password == this.state.login.password) {
-      authUser("registration", this.state.login.username,this.state.login.password,this.registerCallback);
+      authUser("registration", this.state.login.username, this.state.login.password, this.signInCallback);
     } else {
       //#TO-DO: something cute and simple to show it wont work
     }
   }
 
-  registerCallback = (_isSuccessful, _message='') => {
+  signInCallback = (_isSuccessful, _message='') => {
     //# TO-DO : If registration, go to new user stuff, maybe use a token
 
     if(_isSuccessful) {

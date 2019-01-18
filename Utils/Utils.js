@@ -19,9 +19,9 @@ export const getColor = (_str) => {
 }
 
 
-
 // TIMER RELATED THINGS
 export const startHookupTimer = () => {
+  //# TO-DO : This should be happening in the server
   setTimeout(() => {that.sendAlert()}, 15000);
 }
 
@@ -36,8 +36,8 @@ sendAlert = () => {
 
 //NOTIFICATION RELATED THINGS
 const API_BASE  = 'http://carabiner.xyz';
-
-export const registerForPushNotificationsAsync = async (handleNotification) => {
+// Register or Sign In User
+export const authUser = async (_signInType, _username, _password, _callback) => {
   const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
 
   if(status !== 'granted') {
@@ -47,7 +47,9 @@ export const registerForPushNotificationsAsync = async (handleNotification) => {
   let token = await Notifications.getExpoPushTokenAsync();
   //#TO-DO : make post etc fetches into functions
 
-  return fetch(API_BASE + '/token', {
+  let apiURLExtension = (_signInType == "registration") ? '/register' : '/login';
+
+  fetch(API_BASE + apiURLExtension, {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
@@ -59,14 +61,24 @@ export const registerForPushNotificationsAsync = async (handleNotification) => {
         value: token,
       },
       user: {
-        username: 'tillertest',
-        name: 'Todd Page',
+        username: _username,
+        password: _password,
       }
 
     }),
-  });
+  })
+  .then((response) => response.json())
+  .then(async (response) => {
+    console.log('We got a response: ', response.uuid);
+    //# TO-DO : Should tokens time out? How does that work
+    //# TO-DO : make uuid you're setting, the actual uuid we're getting from the api
+    // # TO-DO : signup goes to contact creation
+    await AsyncStorage.setItem('uuid', response.uuid);
+    //# TO-DO : If registration, go to new user stuff, maybe use a token
+    //#TO-DO : v must be done in callback or at least some component
+    //this.props.navigation.navigate('App');
+  }).catch((_error) => { _callback(_error)});
 
-  this.notificationSubscription = Notifications.addListener(handleNotification);
 }
 
 sendMessage = async (messageText) => {

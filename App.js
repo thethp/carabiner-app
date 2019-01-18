@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { createStackNavigator, createSwitchNavigator, createAppContainer } from 'react-navigation';
-import { registerForPushNotificationsAsync } from './Utils/Utils';
+
 
 import HomeScreen from './Screens/App/Home';
 import HookUpScreen from './Screens/App/HookUp';
@@ -47,14 +47,6 @@ const switchNavigator = createSwitchNavigator(
 const AppContainer = createAppContainer(switchNavigator);
 
 export default class App extends React.Component {
-  componentDidMount() {
-    // # TO-DO : Should this be after log in so that token is associated with user?
-    registerForPushNotificationsAsync(this.handleNotification);
-  }
-
-  handleNotification() {
-    console.log('Successfully registered for push notification');
-  }
 
   render() {
     return <AppContainer />;

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { AsyncStorage, Button, StyleSheet, Text, TextInput, TouchableHighlight, View } from 'react-native';
+import { authUser } from '../../Utils/Utils';
 
 export default class LogInSignUp extends React.Component {
 
@@ -8,17 +9,16 @@ export default class LogInSignUp extends React.Component {
 
   	this.state = {
   	  login: {
-        email:  '',
+        username:  '',
         password: '',
+        confirm_password: '',
       },
-      login: true,
-      firstLaunch: this.props.navigation.getParam('firstLaunch,')
+      loginState: true,
   	};
   }
 
   // # TO-DO : Update this page to be login and signup
   // # TO-DO : Use prop passed to show signup v
-  // # TO-DO : show signup if first login, then go to add contact https://stackoverflow.com/questions/40715266/how-to-detect-first-launch-in-react-native
   updateLogin = (key, data) => {
     this.setState({
       login: {
@@ -28,31 +28,84 @@ export default class LogInSignUp extends React.Component {
     });
   }
 
-  // # TO-DO : Make a create function for signup
-  // # TO-DO : signup goes to contact creation
-  loginToApp = async () => {
-    //# TO-DO : Actually check with server to see if information is correct
-    //# TO-DO : get user token from server
-    //# TO-DO : Figure out how to give users individual tokens
-    //# TO-DO : Should tokens time out? How does that work
-    await AsyncStorage.setItem('userToken', 'itstillertime');
-    //# TO-DO : Make the code below work
-    //await AsyncStorage.setItem('firstLaunch', false);
+  renderLoginSignUpSpecificCode = () => {
+    const confirmStyle = (this.state.login.confirm_password == this.state.login.password) ? styles.default : styles.error;
+    //#TODO : why isnt this working?
 
-    this.props.navigation.navigate('App');
+    if(this.state.loginState) {
+      return (
+        // # TODO: button should be a primary style
+        <TouchableHighlight onPress={this.loginToApp}>
+          <View style={styles.button}>
+            <Text>Login</Text>
+          </View>
+        </TouchableHighlight>
+      );
+    } else {
+      return (
+        <View>
+          <Text>Password</Text>
+          <TextInput
+            placeholder='tacoisabadpassword'
+            value={this.state.login.confirm_password}
+            name='confirm_password'
+            secureTextEntry={true}
+            autoCapitalize='none'
+            style={confirmStyle}
+            onChangeText={(text) => this.updateLogin('confirm_password', text)}
+          />
+
+          <TouchableHighlight onPress={this.registerWithApp}>
+            <View style={styles.button}>
+              <Text>Register</Text>
+            </View>
+          </TouchableHighlight>
+        </View>
+      );
+    }
+  }
+
+  loginToApp = () => {
+
+  }
+
+  registerWithApp = () => {
+    if(this.state.login.confirm_password == this.state.login.password) {
+      authUser("registration", this.state.login.username,this.state.login.password,this.registerCallback);
+    } else {
+      //#TO-DO: something cute and simple to show it wont work
+    }
+  }
+
+  registerCallback = (_error) => {
+    //# TODO : make this show to user too
+    console.error('There was an error with registration: ' + _error);
   }
 
   render() {
   	return (
   	  <View style={{flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Sign-In</Text>
+        <Text>Welcome</Text>
 
-        <Text>Email</Text>
+        <Button
+          title="Login"
+          disabled={this.state.loginState}
+          onPress={() => this.setState({loginState: true})}
+        />
+
+        <Button
+          title="Register"
+          disabled={!this.state.loginState}
+          onPress={() => this.setState({loginState: false})}
+        />
+
+        <Text>E-Mail</Text>
         <TextInput
           placeholder='pierre@thegreatcomet.com'
-          value={this.state.login.email}
-          name='email'
-          onChangeText={(text) => this.updateLogin('email', text)}
+          value={this.state.login.username}
+          name='username'
+          autoCapitalize='none'
+          onChangeText={(text) => this.updateLogin('username', text)}
         />
 
         <Text>Password</Text>
@@ -61,15 +114,11 @@ export default class LogInSignUp extends React.Component {
           value={this.state.login.password}
           name='password'
           secureTextEntry={true}
+          autoCapitalize='none'
           onChangeText={(text) => this.updateLogin('password', text)}
         />
 
-        {/*  # TODO: button should be a primary style */}
-        <TouchableHighlight onPress={this.loginToApp}>
-          <View style={styles.button}>
-            <Text>Login</Text>
-          </View>
-        </TouchableHighlight>
+        { this.renderLoginSignUpSpecificCode() }
 
         <Button
           title="Forgot My Password"
@@ -89,5 +138,16 @@ const styles = StyleSheet.create({
     fontSize: 20,
     borderRadius: 100,
     width: 'auto'
+  },
+  error: {
+    borderBottomColor: 'red',
+    borderBottomWidth: 2,
+    borderStyle: 'solid',
+    color: 'red',
+  },
+  default: {
+    borderBottomColor: 'transparent',
+    borderBottomWidth: 0,
+    color: 'black',
   }
 });

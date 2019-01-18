@@ -9,13 +9,12 @@ export default class AuthLoading extends React.Component {
 
   //# TO-DO : is this secure enough?
   checkForToken = async () => {
-  	const userToken = await AsyncStorage.getItem('userToken');
-  	const firstLaunch = await AsyncStorage.getItem('firstLaunch');
+  	const uuid = await AsyncStorage.getItem('uuid');
 
-  	if(userToken) {
+  	if(uuid) {
   		this.props.navigation.navigate('App');
   	} else {
-  		this.props.navigation.navigate('Auth', { firstLaunch: firstLaunch });
+  		this.props.navigation.navigate('Auth');
   	}
   }
 

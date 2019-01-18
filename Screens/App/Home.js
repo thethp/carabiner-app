@@ -5,7 +5,7 @@ export default class HomeScreen extends React.Component {
 
   signOut = async () => {
     //# TO-DO : Move to header or utils
-    await AsyncStorage.removeItem('userToken');
+    await AsyncStorage.removeItem('uuid');
     this.props.navigation.navigate('Auth');
   }
 

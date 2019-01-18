@@ -69,16 +69,15 @@ export const authUser = async (_signInType, _username, _password, _callback) => 
   })
   .then((response) => response.json())
   .then(async (response) => {
-    console.log('We got a response: ', response.uuid);
+    console.log('We got a response: ', response);
+    if(response.success) {
+      await AsyncStorage.setItem('uuid', response.uuid);
+      _callback(true);
+    } else {
+      _callback(false, response.message);
+    }
     //# TO-DO : Should tokens time out? How does that work
-    //# TO-DO : make uuid you're setting, the actual uuid we're getting from the api
-    // # TO-DO : signup goes to contact creation
-    await AsyncStorage.setItem('uuid', response.uuid);
-    //# TO-DO : If registration, go to new user stuff, maybe use a token
-    //#TO-DO : v must be done in callback or at least some component
-    //this.props.navigation.navigate('App');
-  }).catch((_error) => { _callback(_error)});
-
+  });
 }
 
 sendMessage = async (messageText) => {

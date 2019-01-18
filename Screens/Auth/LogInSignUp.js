@@ -70,6 +70,7 @@ export default class LogInSignUp extends React.Component {
   }
 
   registerWithApp = () => {
+    //validate email
     if(this.state.login.confirm_password == this.state.login.password) {
       authUser("registration", this.state.login.username,this.state.login.password,this.registerCallback);
     } else {
@@ -77,9 +78,15 @@ export default class LogInSignUp extends React.Component {
     }
   }
 
-  registerCallback = (_error) => {
-    //# TODO : make this show to user too
-    console.error('There was an error with registration: ' + _error);
+  registerCallback = (_isSuccessful, _message='') => {
+    //# TO-DO : If registration, go to new user stuff, maybe use a token
+
+    if(_isSuccessful) {
+      this.props.navigation.navigate('App');
+    } else {
+      //# TODO : make this show to user too
+      console.log('There was an error with registration: ' + _message);
+    }
   }
 
   render() {

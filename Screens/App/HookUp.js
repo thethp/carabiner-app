@@ -48,6 +48,7 @@ export default class HookUpScreen extends React.Component {
   }
 
   updateHookup = (key, data) => {
+    console.log('hm', key, data);
     this.setState({
       hookup: {
         ...this.state.hookup,
@@ -65,7 +66,7 @@ export default class HookUpScreen extends React.Component {
           placeholder='Grindr, Growlr, a bar, etc...'
           value={this.state.hookup.meetingPlace}
           name='meetingPlace'
-          onChangeText={(text) => this.updateHookup({'meetingPlace': text})}
+          onChangeText={(text) => this.updateHookup('meetingPlace', text)}
         />
 
         <Text>What was their name/username?</Text>
@@ -73,7 +74,7 @@ export default class HookUpScreen extends React.Component {
           placeholder='forsureatop6969'
           value={this.state.hookup.username}
           name='username'
-          onChangeText={(text) => this.updateHookup({'username': text})}
+          onChangeText={(text) => this.updateHookup('username', text)}
         />
 
         <Text>Where are you going to be?</Text>
@@ -83,7 +84,7 @@ export default class HookUpScreen extends React.Component {
           placeholder='1313 Webfoot Walk, Duckburg, Calisota'
           value={this.state.hookup.hookupLocation}
           name='hookupLocation'
-          onChangeText={(text) => this.updateHookup({'hookupLocation': text})}
+          onChangeText={(text) => this.updateHookup('hookupLocation', text)}
         />
 
         <Text>Optional- whats their phone number?</Text>
@@ -93,14 +94,14 @@ export default class HookUpScreen extends React.Component {
           placeholder='525-600-6468'
           value={this.state.hookup.phoneNumber}
           name='phoneNumber'
-          onChangeText={(text) => this.updateHookup({'phoneNumber': text})}
+          onChangeText={(text) => this.updateHookup('phoneNumber', text)}
         />
 
         <Text>We will check in with you after a designated amount of hours to make sure you're ok. When should we do our first check-in?</Text>
         <Picker 
           selectedValue={this.state.hookup.checkInTime}
           name='checkInTime'
-          onValueChange={(itemValue, itemIndex) => this.updateHookup({'checkInTime': itemValue})} 
+          onValueChange={(itemValue, itemIndex) => this.updateHookup('checkInTime', itemValue)} 
         >
           <Picker.Item label="1 hour" value="60" />
           <Picker.Item label="2 hours" value="120" />
@@ -122,7 +123,7 @@ export default class HookUpScreen extends React.Component {
         <Picker 
           selectedValue={this.state.hookup.contact}
           name='contact'
-          onValueChange={(itemValue, itemIndex) => this.updateHookup({'contact': itemValue})} 
+          onValueChange={(itemValue, itemIndex) => this.updateHookup('contact', itemValue)} 
         >
           { this.renderPickerOptions() }
         </Picker>

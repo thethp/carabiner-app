@@ -24,12 +24,12 @@ export default class HomeScreen extends React.Component {
 
         <Button
           title="I'm Hooking Up"
-          onPress = {() => this.props.navigation.navigate('HookUp', { username: 'Carl' })}
+          onPress = {() => this.props.navigation.navigate('HookUp')}
         />
 
         <Button
           title="Manage My Friends"
-          onPress = {() => this.props.navigation.navigate('ManageFriends', { username: 'Carl' })}
+          onPress = {() => this.props.navigation.navigate('ManageFriends')}
           style={{margintop: 10}}
         />
 

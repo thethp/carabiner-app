@@ -7,11 +7,14 @@ export default class HookUpScreen extends React.Component {
     super(props);
 
     this.state = {
-      meetingPlace: '',
-      username:     '',
-      phoneNumber:  '',
-      checkInTime:  '180',
-      contact: '',
+      hookup: {
+        meetingPlace: '',
+        username:     '',
+        hookupLocation: '',
+        phoneNumber:  '',
+        checkInTime:  '180',
+        contact: '',
+      },
       contacts: [],
     };
   }
@@ -25,16 +28,31 @@ export default class HookUpScreen extends React.Component {
   // # TO-DO : Make all event functions same format
   //#TO-DO : validate fields arent empty
   __onPressSubmit = () => {
-    // # TO-DO: Store data 
-    startHookupTimer();
+    startHookupTimer(this.state.hookup, this.startHookupCallback);
+  }
 
-    this.props.navigation.navigate('Home', { hookingUp: true })
+  startHookupCallback = (_isSuccessful, _message: '') => {
+    if(_isSuccessful) {
+      this.props.navigation.navigate('Home', { hookingUp: true });
+    } else {
+      //# TO-DO : show to user?
+      console.log('Error starting hookup: ', _message);
+    }
   }
 
   renderPickerOptions = () => {
     return this.state.contacts.map((contact, i) => {
       //# TO-DO : if confirmed = true - if none confirmed, then what?
       return (<Picker.Item key={i} label={contact.name} value={contact.uuid} />)
+    });
+  }
+
+  updateHookup = (key, data) => {
+    this.setState({
+      hookup: {
+        ...this.state.hookup,
+        [key]: data
+      }
     });
   }
 
@@ -45,13 +63,17 @@ export default class HookUpScreen extends React.Component {
         <Text>Nice! Where'd you meet?</Text>
         <TextInput
           placeholder='Grindr, Growlr, a bar, etc...'
-          onChangeText={(text) => this.setState({meetingPlace: text})}
+          value={this.state.hookup.meetingPlace}
+          name='meetingPlace'
+          onChangeText={(text) => this.updateHookup({'meetingPlace': text})}
         />
 
         <Text>What was their name/username?</Text>
         <TextInput
           placeholder='forsureatop6969'
-          onChangeText={(text) => this.setState({username: text})}
+          value={this.state.hookup.username}
+          name='username'
+          onChangeText={(text) => this.updateHookup({'username': text})}
         />
 
         <Text>Where are you going to be?</Text>
@@ -59,7 +81,9 @@ export default class HookUpScreen extends React.Component {
         {/* # TO-DO: Tie in with google maps autocomplete or similar */}
         <TextInput
           placeholder='1313 Webfoot Walk, Duckburg, Calisota'
-          onChangeText={(text) => this.setState({username: text})}
+          value={this.state.hookup.hookupLocation}
+          name='hookupLocation'
+          onChangeText={(text) => this.updateHookup({'hookupLocation': text})}
         />
 
         <Text>Optional- whats their phone number?</Text>
@@ -67,13 +91,16 @@ export default class HookUpScreen extends React.Component {
         {/* # TO-DO: Tie in with google maps autocomplete or similar */}
         <TextInput
           placeholder='525-600-6468'
-          onChangeText={(text) => this.setState({phoneNumber: text})}
+          value={this.state.hookup.phoneNumber}
+          name='phoneNumber'
+          onChangeText={(text) => this.updateHookup({'phoneNumber': text})}
         />
 
         <Text>We will check in with you after a designated amount of hours to make sure you're ok. When should we do our first check-in?</Text>
         <Picker 
-          selectedValue={this.state.checkInTime}
-          onValueChange={(itemValue, itemIndex) => this.setState({checkInTime: itemValue})} 
+          selectedValue={this.state.hookup.checkInTime}
+          name='checkInTime'
+          onValueChange={(itemValue, itemIndex) => this.updateHookup({'checkInTime': itemValue})} 
         >
           <Picker.Item label="1 hour" value="60" />
           <Picker.Item label="2 hours" value="120" />
@@ -93,8 +120,9 @@ export default class HookUpScreen extends React.Component {
         {/* # TO-DO: Make this fill in with real data from a list of contacts */}
         {/* # TO-DO: Only show this as an input if there's more than one contact */}
         <Picker 
-          selectedValue={this.state.contact}
-          onValueChange={(itemValue, itemIndex) => this.setState({contact: itemValue})} 
+          selectedValue={this.state.hookup.contact}
+          name='contact'
+          onValueChange={(itemValue, itemIndex) => this.updateHookup({'contact': itemValue})} 
         >
           { this.renderPickerOptions() }
         </Picker>

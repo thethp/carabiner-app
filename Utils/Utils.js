@@ -19,21 +19,6 @@ export const getColor = (_str) => {
 }
 
 
-// TIMER RELATED THINGS
-export const startHookupTimer = () => {
-  //# TO-DO : This should be happening in the server
-  setTimeout(() => {that.sendAlert()}, 15000);
-}
-
-sendAlert = () => {
-  //# TODO : make this an actual notification
-  //# TODO : add correct imagery to this icon
-  //# TODO : should this all be from an API? what happens if they close the app?
-  this.sendMessage('OK');
-}
-
-
-
 //API RELATED THINGS
 const API_BASE  = 'http://carabiner.xyz';
 
@@ -135,6 +120,39 @@ export const getContacts = async (_callback) => {
   });
 }
 
+export const startHookupTimer = async (_hookupDetails, _callback) => {
+  let uuid = await AsyncStorage.getItem('uuid');
+
+  fetch(API_BASE + '/startHookup', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+
+      uuid: uuid,
+      hookupDetails: _hookupDetails,
+
+    }),
+  })
+  .then((response) => response.json())
+  .then(async (response) => {
+
+    if(response.success) {
+      _callback(true);
+    } else {
+      _callback(false, response.message);
+    }
+  });
+}
+
+sendAlert = () => {
+  //# TODO : make this an actual notification
+  //# TODO : add correct imagery to this icon
+  //# TODO : should this all be from an API? what happens if they close the app?
+  this.sendMessage('OK');
+}
 sendMessage = async (messageText) => {
   fetch(API_BASE + '/message', {
     method: 'POST',
@@ -149,4 +167,3 @@ sendMessage = async (messageText) => {
     }),
   });
 }
-

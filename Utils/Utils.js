@@ -93,6 +93,29 @@ export const authUser = async (_signInType, _username, _password, _callback) => 
   });
 }
 
+//End Hookup
+export const endHookup = async (_contactUuid, _callback) => {
+  let uuid = await AsyncStorage.getItem('uuid');
+
+  fetch(API_BASE + '/endHookup', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+
+      uuid: uuid
+
+    }),
+  })
+  .then((response) => response.json())
+  .then((response) => {
+    console.log('We got a response: ', response.success);
+    _callback(response.success);
+  });
+}
+
 // Get Contact
 export const getContact = async (_contactUuid, _callback) => {
   let uuid = await AsyncStorage.getItem('uuid');
@@ -100,7 +123,6 @@ export const getContact = async (_contactUuid, _callback) => {
   fetch(API_BASE + '/getContacts/' + uuid + '/specificContact/' + _contactUuid)
   .then((response) => response.json())
   .then((response) => {
-    console.log('We got a response: ', response);
     _callback(response);
   });
 }
@@ -116,6 +138,23 @@ export const getContacts = async (_callback) => {
       _callback(response.contacts);
     } else {
       _callback([]);
+    }
+  });
+}
+
+// Get Hookup Details
+export const getHookUpDetails = async (_callback) => {
+  //#TO-DO : should these all be promises? :-/
+  //# TO-DO :make Up caps in all uses of hookup
+  let uuid = await AsyncStorage.getItem('uuid');
+
+  fetch(API_BASE + '/getHookupDetails/' + uuid)
+  .then((response) => response.json())
+  .then((response) => {
+    if(response.success) {
+      _callback(response.isHookingUp, response.hookUpDetails);
+    } else {
+      console.log("Couldn't fetch hookup details: ", _response.message);
     }
   });
 }
@@ -144,26 +183,5 @@ export const startHookupTimer = async (_hookupDetails, _callback) => {
     } else {
       _callback(false, response.message);
     }
-  });
-}
-
-sendAlert = () => {
-  //# TODO : make this an actual notification
-  //# TODO : add correct imagery to this icon
-  //# TODO : should this all be from an API? what happens if they close the app?
-  this.sendMessage('OK');
-}
-sendMessage = async (messageText) => {
-  fetch(API_BASE + '/message', {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-
-      message: messageText
-
-    }),
   });
 }

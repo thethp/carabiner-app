@@ -22,7 +22,7 @@ export default class HookUpScreen extends React.Component {
   componentWillMount = () => {
     getContacts((_contacts) => {
       this.setState({contacts: _contacts});
-    })
+    });
   }
 
   // # TO-DO : Make all event functions same format
@@ -118,8 +118,8 @@ export default class HookUpScreen extends React.Component {
         </Picker>
 
         <Text>You will have 8 hours to respond to our check-in.  After this time, we will text a contact the above information.  Who should we text?</Text>
-        {/* # TO-DO: Make this fill in with real data from a list of contacts */}
         {/* # TO-DO: Only show this as an input if there's more than one contact */}
+        {/* # TO-DO: Additional input for "additional details?" */}
         <Picker 
           selectedValue={this.state.hookup.contact}
           name='contact'

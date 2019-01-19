@@ -18,27 +18,24 @@ export default class AddEditFriendsScreen extends React.Component {
   	};
   }
 
-  componentDidMount = () => {
+  componentWillMount = () => {
     if(this.props.navigation.getParam('screenMode') == 'edit') {
       this.setState({addingFriend: false});
-      this.getContact(this.props.navigation.getParam('uuid'));
+      //# TODO: format phone number prettily
+      //# TODO: should there be a loading screen here/on other loading pages?
+      getContact(this.props.navigation.getParam('uuid'), (_response) => {
+        if(_response.success) {
+          this.setState({friend: _response.contact});
+        } else {
+          //# TO-DO : Show user something went wrong?
+        }
+      });
 
     } else if(this.props.navigation.getParam('screenMode') == 'add') {
       {/* #TO-DO: Does anything go here? */}
     }
   }
 
-  getContact = (_uuid) => {
-    //# TODO: format phone number prettily
-    //# TODO: should there be a loading screen here/on other loading pages?
-    getContact(_uuid, (_response) => {
-      if(_response.success) {
-        this.setState({friend: _response.contact});
-      } else {
-        //# TO-DO : Show user something went wrong?
-      }
-    });
-  }
 
   updateContact = (key, data) => {
     this.setState({

@@ -12,18 +12,13 @@ export default class ManageFriendsScreen extends React.Component {
     };
   }
 
-  componentDidMount = () => {
+  componentWillMount = () => {
     //# TO-DO : this should be called even on the return to this page...
-    this.getFriends();
-  }
-
-  getFriends = async () => {
     //# TO-DO : Show any errors to user
     //# TO-DO : If 0 contacts, perhaps auto direct to add contact page, with a note
     getContacts((_contacts) => {
       this.setState({friends: _contacts});
     });
-    
   }
 
   renderFriends = () => {

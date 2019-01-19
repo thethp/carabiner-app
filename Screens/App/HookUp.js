@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Picker, Text, TextInput, ScrollView } from 'react-native';
-import { startHookupTimer } from '../../Utils/Utils';
+import { getContacts, startHookupTimer } from '../../Utils/Utils';
 
 export default class HookUpScreen extends React.Component {
   constructor(props) {
@@ -12,7 +12,14 @@ export default class HookUpScreen extends React.Component {
       phoneNumber:  '',
       checkInTime:  '180',
       contact: '',
+      contacts: [],
     };
+  }
+
+  componentWillMount = () => {
+    getContacts((_contacts) => {
+      this.setState({contacts: _contacts});
+    })
   }
 
   // # TO-DO : Make all event functions same format
@@ -22,6 +29,13 @@ export default class HookUpScreen extends React.Component {
     startHookupTimer();
 
     this.props.navigation.navigate('Home', { hookingUp: true })
+  }
+
+  renderPickerOptions = () => {
+    return this.state.contacts.map((contact, i) => {
+      //# TO-DO : if confirmed = true - if none confirmed, then what?
+      return (<Picker.Item key={i} label={contact.name} value={contact.uuid} />)
+    });
   }
 
   render() {
@@ -82,8 +96,7 @@ export default class HookUpScreen extends React.Component {
           selectedValue={this.state.contact}
           onValueChange={(itemValue, itemIndex) => this.setState({contact: itemValue})} 
         >
-          <Picker.Item label="Madison" value="00001" />
-          <Picker.Item label="Jeff" value="00002" />
+          { this.renderPickerOptions() }
         </Picker>
 
         <Button

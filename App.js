@@ -22,15 +22,24 @@ const AppStack = createStackNavigator(
     ManageFriends: ManageFriendsScreen,
     AddEditFriends: AddEditFriendsScreen,
   },
-  { initialRouteName: 'Home' }
+  { 
+    initialRouteName: 'Home' 
+  }
 );
 
 const AuthStack = createStackNavigator(
   {
-    LogInSignUp:  LogInSignUp,
+    LogInSignUp: {
+      screen: LogInSignUp,
+      navigationOptions: () => ({
+        header: null
+      }),
+    },
     ForgotMyPassword: ForgotMyPassword,
   },
-  { initialRouteName: 'LogInSignUp' }
+  { 
+    initialRouteName: 'LogInSignUp'
+  }
 );
 
 const switchNavigator = createSwitchNavigator(

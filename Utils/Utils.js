@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, Dimensions } from 'react-native';
 import { Permissions, Notifications } from 'expo';
+
+const {
+  width: SCREEN_WIDTH,
+  height: SCREEN_HEIGHT,
+} = Dimensions.get('window');
+
 
 const that = this;
 
@@ -16,6 +22,21 @@ export const getColor = (_str) => {
   let b = hash & 0x0000FF;
   
   return "#" + ("0" + r.toString(16)).substr(-2) + ("0" + g.toString(16)).substr(-2) + ("0" + b.toString(16)).substr(-2);
+}
+
+const guidelineBaseWidth = 900;
+const guidelineBaseHeight = 1600;
+
+export const scale = (size) => {
+  return SCREEN_WIDTH / guidelineBaseWidth * size;
+};
+
+export const verticalScale = (size) => {
+  return SCREEN_HEIGHT / guidelineBaseHeight * size;
+}
+
+export const moderateScale = (size, factor = 0.5) => {
+  return (size + ( scale(size) - size )) * factor;
 }
 
 
@@ -94,7 +115,7 @@ export const authUser = async (_signInType, _username, _password, _callback) => 
 }
 
 //End Hookup
-export const endHookup = async (_contactUuid, _callback) => {
+export const endHookup = async (_callback) => {
   let uuid = await AsyncStorage.getItem('uuid');
 
   fetch(API_BASE + '/endHookup', {
@@ -155,6 +176,34 @@ export const getHookUpDetails = async (_callback) => {
       _callback(response.isHookingUp, response.hookUpDetails);
     } else {
       console.log("Couldn't fetch hookup details: ", _response.message);
+    }
+  });
+}
+
+
+export const sendMessage = async (_callback) => {
+  let uuid = await AsyncStorage.getItem('uuid');
+
+  fetch(API_BASE + '/sendMessage', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+
+      uuid: uuid
+
+    }),
+  })
+  .then((response) => response.json())
+  .then((response) => {
+    if(response.success) {
+      //# TO-DO : show message sent confirmation
+      //# TO-DO : send with uuid so we can tell the person who their text is for
+      //_callback(response.isHookingUp, response.hookUpDetails);
+    } else {
+      //console.log("Couldn't fetch hookup details: ", _response.message);
     }
   });
 }

@@ -22,7 +22,9 @@ export default class HomeScreen extends React.Component {
   }
 
   componentWillMount = () => {
+
     getHookUpDetails((_isHookingUp, _hookUpDetails) => {
+
       this.setState({
         isHookingUp: _isHookingUp, 
         hookUpDetails: _hookUpDetails,
@@ -59,6 +61,7 @@ export default class HomeScreen extends React.Component {
           <Text>At {this.state.hookUpDetails.hookupLocation}</Text>
           {/* #TO-DO : make the below a countdown */}
           <Text>Your check in time is in: </Text>
+          {/* contact below is coming through as uuid */}
           <Text>After that we contact: {this.state.hookUpDetails.contact}</Text>
 
           <Button

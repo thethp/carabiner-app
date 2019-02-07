@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, TextInput, TouchableHighlight, View } from 'react-native';
-import { addEditContact, getContact } from '../../Utils/Utils';
+import { addEditContact, getContact, sendMessage } from '../../Utils/Utils';
 
 export default class AddEditFriendsScreen extends React.Component {
 
@@ -52,7 +52,7 @@ export default class AddEditFriendsScreen extends React.Component {
     //#TO-DO: Send text to person to have them confirm their status as a contact
     //#TO-DO : on confirmation of the above, mark them as confirmed
     //#TO-DO : validate fields arent empty
-
+    sendMessage();
     addEditContact(this.state.friend, this.addEditContactCallback);
   }
 

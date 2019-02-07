@@ -48,7 +48,6 @@ export default class HookUpScreen extends React.Component {
   }
 
   updateHookup = (key, data) => {
-    console.log('hm', key, data);
     this.setState({
       hookup: {
         ...this.state.hookup,

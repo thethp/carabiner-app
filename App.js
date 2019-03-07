@@ -23,7 +23,10 @@ const AppStack = createStackNavigator(
     AddEditFriends: AddEditFriendsScreen,
   },
   { 
-    initialRouteName: 'Home' 
+    initialRouteName: 'Home',
+    headerStyle: () => ({
+      backgroundColor: 'red'
+    }),
   }
 );
 

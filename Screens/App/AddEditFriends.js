@@ -47,7 +47,8 @@ export default class AddEditFriendsScreen extends React.Component {
   }
 
   submitContact = () => {
-    //#TO-DO: validate phone number
+    //#TO-DO: validate phone number [needs area code]
+    //#TO-DO: do we need a country code?
     //#TO-DO: format phone number as just digits
     //#TO-DO: Send text to person to have them confirm their status as a contact
     //#TO-DO : on confirmation of the above, mark them as confirmed
@@ -104,6 +105,7 @@ export default class AddEditFriendsScreen extends React.Component {
         { this.renderConfirmedStatus() }
 
         {/*  # TODO: + button should be a primary style */}
+        {/*  # TODO: remove contact option */}
         <TouchableHighlight underlayColor="purple" onPress = {this.submitContact}>
             <View style={styles.button}>
               { this.state.addingFriend ?

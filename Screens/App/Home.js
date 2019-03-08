@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AsyncStorage, Button, Image, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import { AsyncStorage, Button, Image, SafeAreaView, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 import { Font, Svg } from 'expo';
 import { endHookup, getHookUpDetails } from '../../Utils/Utils';
 
@@ -81,7 +81,7 @@ export default class HomeScreen extends React.Component {
           <Path d="M.993 0h900v1600h-900z" transform="translate(-.233 .721)" fill="url(#a)" fillRule="evenodd"/>
         </Svg>
       {/* # TO-DO: Can the mountain range be an svg too? */}
-        <Image style={styles.MountainRange} source={require('../../assets/MountainRange.png')} />
+        <Image style={styles.MountainRange} source={require('../../assets/MountainRange2.png')} />
       </View>
     );
   }
@@ -139,13 +139,22 @@ export default class HomeScreen extends React.Component {
   render() {
 
     return (
-      <View style={{flex: 1 }}>
+      <SafeAreaView style={{flex: 1 }}>
         { this.renderBackground() }
 
         {/* # TO-DO: Onboarding? */}
         {/* # TO-DO: If no contacts only show an add contact button */}
         {/* # TO-DO: Support */}
         {/* # TO-DO: Ads -> Subscription */}
+
+        <TouchableHighlight style={{height: '4%', width: 'auto', marginRight: 10, marginLeft: 60}} onPress={this.__signOut}>
+          <Svg width="100%" height="100%" preserveAspectRatio="xMaxYMax meet" viewBox="0 0 56 56">
+            <G fill="#FFF" fillRule="nonzero">
+              <Path d="M25.682 55.31a7.78 7.78 0 0 0 7.78-7.78v-7.164a2.593 2.593 0 0 0-5.187 0v7.164a2.593 2.593 0 0 1-2.593 2.593H8.18a2.593 2.593 0 0 1-2.593-2.593V8.633A2.593 2.593 0 0 1 8.179 6.04h17.503a2.593 2.593 0 0 1 2.593 2.593v7.26a2.593 2.593 0 0 0 5.187 0v-7.26a7.78 7.78 0 0 0-7.78-7.78H8.18a7.78 7.78 0 0 0-7.78 7.78V47.53a7.78 7.78 0 0 0 7.78 7.78h17.503z"/>
+              <Path d="M54.22 26.137L40.606 12.523a2.595 2.595 0 0 0-3.67 3.669l9.303 9.296H17.255a2.593 2.593 0 0 0 0 5.187h28.984l-9.328 9.322a2.593 2.593 0 1 0 3.669 3.643l13.614-13.614a2.593 2.593 0 0 0 0-3.89h.026z"/>
+            </G>
+          </Svg>
+        </TouchableHighlight>
 
         { this.renderHookingUp() }
 
@@ -170,14 +179,10 @@ export default class HomeScreen extends React.Component {
           </Text>
         </View>
 
-        <View style={{flex: 1}}>{/* # TO-DO: Move signout into header, get rid of func on this page */}
-        <Button
-          title="Signout"
-          onPress = {this.__signOut}
-        /></View>
+        <View style={{flex: 1}}></View>
 
       
-      </View>
+      </SafeAreaView>
     );
   }
 }
@@ -197,8 +202,8 @@ const styles = StyleSheet.create({
   MountainRange: {
     position: 'absolute',
     width: '100%',
-    height: '78%',
-    top: '55%',
+    height: '125%',
+    top: '78%',
   },
   ActionView: {
     flex: 1, 

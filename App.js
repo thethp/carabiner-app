@@ -24,9 +24,7 @@ const AppStack = createStackNavigator(
   },
   { 
     initialRouteName: 'Home',
-    headerStyle: () => ({
-      backgroundColor: 'red'
-    }),
+    headerMode: 'none'
   }
 );
 

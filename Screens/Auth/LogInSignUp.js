@@ -79,6 +79,9 @@ export default class LogInSignUp extends React.Component {
 
     //# TO-DO : animate this nicely
     //# TO-DO : intro animation, mountains come up?
+    //# TO-DO : make mountains svg
+    //# TO-DO : make sun svg
+    //# TO-DO : make new icon/loading screen
 
     return (
       <LinearGradient

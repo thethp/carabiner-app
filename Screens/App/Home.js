@@ -147,7 +147,7 @@ export default class HomeScreen extends React.Component {
         {/* # TO-DO: Support */}
         {/* # TO-DO: Ads -> Subscription */}
 
-        <TouchableHighlight style={{height: '4%', width: 'auto', marginRight: 10, marginLeft: 60}} onPress={this.__signOut}>
+        <TouchableHighlight style={{height: '4%', width: 'auto', marginRight: 10, marginBottom: 30}} onPress={this.__signOut}>
           <Svg width="100%" height="100%" preserveAspectRatio="xMaxYMax meet" viewBox="0 0 56 56">
             <G fill="#FFF" fillRule="nonzero">
               <Path d="M25.682 55.31a7.78 7.78 0 0 0 7.78-7.78v-7.164a2.593 2.593 0 0 0-5.187 0v7.164a2.593 2.593 0 0 1-2.593 2.593H8.18a2.593 2.593 0 0 1-2.593-2.593V8.633A2.593 2.593 0 0 1 8.179 6.04h17.503a2.593 2.593 0 0 1 2.593 2.593v7.26a2.593 2.593 0 0 0 5.187 0v-7.26a7.78 7.78 0 0 0-7.78-7.78H8.18a7.78 7.78 0 0 0-7.78 7.78V47.53a7.78 7.78 0 0 0 7.78 7.78h17.503z"/>

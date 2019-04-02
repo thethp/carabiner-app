@@ -79,7 +79,7 @@ export default class HookUpScreen extends React.Component {
 
         { renderFormBackground() }
 
-        <TouchableHighlight style={{height: '3%', width: 'auto', marginLeft: 5, marginBottom: 30}} onPress = {() => this.props.navigation.navigate('Home')}>
+        <TouchableHighlight style={{height: '3%', width: 'auto', marginLeft: 10, marginBottom: 30}} onPress = {() => this.props.navigation.navigate('Home')}>
           <Svg width="100%" height="100%" preserveAspectRatio="xMinYMin meet" viewBox="0 0 45 54" >
             <Path d="M40.826 4.072L4 30.5l36.479 19.344L4 30.5z" stroke="#FFF" strokeWidth="7" fill="none" fillRule="evenodd" strokeLinecap="round" strokeLinejoin="round"/>
           </Svg>

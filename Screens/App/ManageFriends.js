@@ -4,7 +4,7 @@ import { Font, Svg } from 'expo';
 import { renderFormBackground } from './Renderings';
 import { getContacts, getColor } from '../../Utils/Utils';
 
-const { Circle, Defs, G, Path, RadialGradient, Stop, Use } = Svg;
+const { Circle, Defs, G, Path, RadialGradient, Stop, TSpan, Use } = Svg;
 
 export default class ManageFriendsScreen extends React.Component {
 
@@ -19,7 +19,6 @@ export default class ManageFriendsScreen extends React.Component {
   componentWillMount = () => {
     //# TO-DO : this should be called even on the return to this page...
     //# TO-DO : Show any errors to user
-    //# TO-DO : If 0 contacts, perhaps auto direct to add contact page, with a note
 
     Font.loadAsync({
       'ostrich-sans-heavy': require('../../assets/Fonts/OstrichSans-Heavy.otf')
@@ -31,7 +30,11 @@ export default class ManageFriendsScreen extends React.Component {
     });
 
     getContacts((_contacts) => {
-      this.setState({friends: _contacts});
+      if(_contacts.length > 0) {
+        this.setState({friends: _contacts});
+      } else {
+        this.props.navigation.navigate('AddEditFriends', { screenMode: 'add' })
+      }
     });
   }
 
@@ -45,11 +48,12 @@ export default class ManageFriendsScreen extends React.Component {
             <Svg width="100%" height="100%" preserveAspectRatio="xMidYMin meet" viewBox="0 0 156 156">
               <G transform="translate(4.47 4)" fill="none" fillRule="evenodd">
                 <Circle stroke="#362950" strokeWidth="8" fill={getColor(friend.name)} cx="73.464" cy="73.956" r="73.464"/>
-                <Path d="M107.244 73.788l-67.56.008M73.464 40.34v67.232" stroke="#FFF" strokeWidth="5" strokeLinecap="round"/>
               </G>
             </Svg>
-            <Text>{friend.name.substr(0,1)}</Text>
           </TouchableHighlight>
+          <Text style={[styles.ContactInitial, {
+            fontFamily: this.state.isFontLoaded ? 'ostrich-sans-heavy' : null
+          }]} onPress = {() => this.props.navigation.navigate('AddEditFriends', { screenMode: 'edit', uuid: friend.uuid })}>{friend.name.substr(0,1)}</Text>
         </View>
       )
     });
@@ -63,7 +67,7 @@ export default class ManageFriendsScreen extends React.Component {
 
       { renderFormBackground() }
 
-      <TouchableHighlight style={{height: '3%', width: 'auto', marginLeft: 5, marginBottom: 30}} onPress = {() => this.props.navigation.navigate('Home')}>
+      <TouchableHighlight style={{height: '3%', width: 'auto', marginLeft: 10, marginBottom: 30}} onPress = {() => this.props.navigation.navigate('Home')}>
         <Svg width="100%" height="100%" preserveAspectRatio="xMinYMin meet" viewBox="0 0 45 54" >
           <Path d="M40.826 4.072L4 30.5l36.479 19.344L4 30.5z" stroke="#FFF" strokeWidth="7" fill="none" fillRule="evenodd" strokeLinecap="round" strokeLinejoin="round"/>
         </Svg>
@@ -99,12 +103,11 @@ export default class ManageFriendsScreen extends React.Component {
           Manage Contacts
         </Text>
       </View>
-        {/*  # TODO: + button should be a primary style */}
-
-    		{ this.renderFriends() }
 
         <View style={{flex: 1, backgroundColor: '#FFF', flexDirection: 'row', justifyContent: 'space-between', flexWrap: 'wrap', paddingLeft: '7.5%', paddingRight: '7.5%'}}>
           
+          { this.renderFriends() }
+
           <View width="22%" height="17%">
         		<TouchableHighlight onPress = {() => this.props.navigation.navigate('AddEditFriends', { screenMode: 'add' })}>
         			<Svg width="100%" height="100%" preserveAspectRatio="xMidYMin meet" viewBox="0 0 156 156">
@@ -157,14 +160,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignItems: 'flex-start',
   },
-  button: {
-    margin: 10,
-    aspectRatio: 1,
-    width: '16%',
-    height: 'auto',
-    backgroundColor: '#9571DC',
-    borderWidth: 8,
-    borderColor: '#362950',
-    borderRadius: 100,
+  ContactInitial: {
+    position: 'absolute',
+    color: '#FFF',
+    top: '20%', 
+    left: '33%',
+    fontSize: 42
   }
 });

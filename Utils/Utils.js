@@ -110,7 +110,6 @@ export const authUser = async (_signInType, _username, _password, _callback) => 
     } else {
       _callback(false, response.message);
     }
-    //# TO-DO : Should tokens time out? How does that work
   });
 }
 
@@ -165,8 +164,6 @@ export const getContacts = async (_callback) => {
 
 // Get Hookup Details
 export const getHookUpDetails = async (_callback) => {
-  //#TO-DO : should these all be promises? :-/
-  //# TO-DO :make Up caps in all uses of hookup
   let uuid = await AsyncStorage.getItem('uuid');
 
   fetch(API_BASE + '/getHookupDetails/' + uuid)

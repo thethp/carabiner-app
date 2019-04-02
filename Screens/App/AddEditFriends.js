@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { SafeAreaView, StyleSheet, Text, TextInput, TouchableHighlight, View } from 'react-native';
+import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableHighlight, View } from 'react-native';
 import { Font, Svg } from 'expo';
 import { renderFormBackground } from './Renderings';
-import { addEditContact, getContact, sendMessage } from '../../Utils/Utils';
+import { addEditContact, getContact, scale, sendMessage, verticalScale } from '../../Utils/Utils';
 
 const { Defs, G, Path, RadialGradient, Stop, Use } = Svg;
 
@@ -85,20 +85,12 @@ export default class AddEditFriendsScreen extends React.Component {
     }
   }
 
-  renderConfirmedStatus = () => {
-    if(this.state.addingFriend) {
-      return (<Text>Pressing the button below will send a text to this person confirming they are ok with being a contact. They do not need this app to be a contact.</Text>);
-    } else {
-      return (<Text>Confirmed: {this.state.friend.confirmed}</Text>);
-    }
-  }
-
   render() {
   	return (
   	  <SafeAreaView style={{flex: 1}}>
 
         { renderFormBackground() }
-        <TouchableHighlight style={{height: '3%', width: 'auto', marginLeft: 5, marginBottom: 30}} onPress = {() => this.props.navigation.navigate('Home')}>
+        <TouchableHighlight style={{height: '3%', width: 'auto', marginLeft: 10, marginBottom: 30}} onPress = {() => this.props.navigation.navigate('ManageFriends')}>
           <Svg width="100%" height="100%" preserveAspectRatio="xMinYMin meet" viewBox="0 0 45 54" >
             <Path d="M40.826 4.072L4 30.5l36.479 19.344L4 30.5z" stroke="#FFF" strokeWidth="7" fill="none" fillRule="evenodd" strokeLinecap="round" strokeLinejoin="round"/>
           </Svg>
@@ -150,35 +142,36 @@ export default class AddEditFriendsScreen extends React.Component {
             }
         </View>
 
-        <Text>Name</Text>
-        <TextInput
-          placeholder='William Finn'
-          value={this.state.friend.name}
-          name='name'
-          onChangeText={(text) => this.updateContact('name', text)}
-        />
+        <ScrollView style={styles.ScrollView}>
+          {/* # TO-DO: just use default font for labels/field? */}
+          <Text style={[styles.Label, {fontFamily: this.state.isFontLoaded ? 'league-mono-medium' : null}]}>Name</Text>
+          <TextInput
+            placeholder='William Finn'
+            value={this.state.friend.name}
+            name='name'
+            onChangeText={(text) => this.updateContact('name', text)}
+            style={[styles.Input, {fontFamily: this.state.isFontLoaded ? 'league-mono-light' : null}]}
+          />
 
-        <Text>Phone Number</Text>
-        <TextInput
-          placeholder='525-600-6468'
-          value={this.state.friend.phone}
-          name='name'
-          onChangeText={(text) => this.updateContact('phone', text)}
-        />
+          <Text style={[styles.Label, {fontFamily: this.state.isFontLoaded ? 'league-mono-medium' : null}]}>Phone Number</Text>
+          <TextInput
+            placeholder='525-600-6468'
+            value={this.state.friend.phone}
+            name='name'
+            onChangeText={(text) => this.updateContact('phone', text)}
+            style={[styles.Input, {fontFamily: this.state.isFontLoaded ? 'league-mono-light' : null}]}
+          />
 
-        { this.renderConfirmedStatus() }
-
-        {/*  # TODO: + button should be a primary style */}
-        {/*  # TODO: remove contact option */}
-        <TouchableHighlight underlayColor="purple" onPress = {this.submitContact}>
-            <View style={styles.button}>
-              { this.state.addingFriend ?
-                  <Text>Add Friend</Text>
-                :
-                  <Text>Edit Friend</Text>
-              }
-            </View>
+          <TouchableHighlight
+            style={styles.SubmitButtonContainer}
+            onPress={this.submitContact}
+          >
+            <Image 
+              style={styles.SubmitButton} 
+              source={require('../../assets/SubmitButton.png')} 
+            />
           </TouchableHighlight>
+        </ScrollView>
 
   	  </SafeAreaView>
   	);
@@ -193,7 +186,7 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     textAlign: 'center',
     height: '15%',
-    marginTop: 20,
+    marginTop: 30,
     marginBottom: 12
   },
   TitleText: {
@@ -203,12 +196,32 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignItems: 'flex-start',
   },
-  button: {
-    margin: 10,
-    padding: 10,
-    backgroundColor: 'pink',
-    fontSize: 20,
-    borderRadius: 100,
-    width: 'auto'
-  }
+  ScrollView: {
+    flex: 4,
+    width: '100%',
+    paddingLeft: '7.5%',
+    paddingRight: '7.5%',
+    backgroundColor: '#FFF'
+  },
+  Label: {
+    color: '#000',
+    fontSize: 13.6,
+    marginBottom: 5,
+    marginTop: 15
+  },
+  Input: {
+    marginLeft: 10,
+    borderBottomWidth: 2,
+    borderBottomColor: '#D8D8D8',
+    paddingBottom: 4,
+  },
+  SubmitButtonContainer: {
+    marginLeft: 'auto',
+    marginTop: 20
+  },
+  SubmitButton: {
+    width: scale(185),
+    height: verticalScale(120),
+    resizeMode: 'contain'
+  },
 });

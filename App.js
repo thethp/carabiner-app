@@ -12,7 +12,6 @@ import LogInSignUp from './Screens/Auth/LogInSignUp';
 import ForgotMyPassword from './Screens/Auth/ForgotMyPassword';
 
 // #TO-DO : different start screen if no friends?
-// #TO-DO : add app icons to app.json
 
 const AppStack = createStackNavigator(
   {

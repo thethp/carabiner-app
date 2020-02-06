@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { AsyncStorage, Button, Image, SafeAreaView, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
-import { Font, Svg } from 'expo';
+import * as Font from 'expo-font';
+import Svg, { Defs, G, Path, RadialGradient, Stop } from 'react-native-svg';
 import { endHookup, getHookUpDetails } from '../../Utils/Utils';
-
-const { Defs, G, Path, RadialGradient, Stop } = Svg;
 
 export default class HomeScreen extends React.Component {
 
@@ -25,7 +24,7 @@ export default class HomeScreen extends React.Component {
     };
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     Font.loadAsync({
       'ostrich-sans-heavy': require('../../assets/Fonts/OstrichSans-Heavy.otf'),
     })

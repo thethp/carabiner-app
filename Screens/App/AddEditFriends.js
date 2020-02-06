@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableHighlight, View } from 'react-native';
-import { Font, Svg } from 'expo';
+import * as Font from 'expo-font';
+import Svg, { Defs, G, Path, RadialGradient, Stop, Use } from 'react-native-svg';
 import { renderFormBackground } from './Renderings';
 import { addEditContact, getContact, scale, sendMessage, verticalScale } from '../../Utils/Utils';
-
-const { Defs, G, Path, RadialGradient, Stop, Use } = Svg;
 
 export default class AddEditFriendsScreen extends React.Component {
 
@@ -22,8 +21,9 @@ export default class AddEditFriendsScreen extends React.Component {
   	};
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
 
+    // #TO-DO : There MUST be a way to only laod the fonts in app.js and use them everywhere
     Font.loadAsync({
       'ostrich-sans-heavy': require('../../assets/Fonts/OstrichSans-Heavy.otf'),
       'league-mono-light': require('../../assets/Fonts/LeagueMono-Light.otf'),
@@ -69,6 +69,7 @@ export default class AddEditFriendsScreen extends React.Component {
     //#TO-DO: Send text to person to have them confirm their status as a contact
     //#TO-DO : on confirmation of the above, mark them as confirmed
     //#TO-DO : validate fields arent empty
+    //#TO-DO : handle network errors
     sendMessage();
     addEditContact(this.state.friend, this.addEditContactCallback);
   }

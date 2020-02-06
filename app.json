@@ -4,7 +4,7 @@
     "description": "Carabiner is an app for providing peace of mind during hook ups, and other interactions with strangers",
     "slug": "carabiner-app",
     "privacy": "public",
-    "sdkVersion": "32.0.0",
+    "sdkVersion": "36.0.0",
     "platforms": [
       "ios",
       "android"

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { AsyncStorage, Dimensions } from 'react-native';
-import { Permissions, Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
+import { Notifications } from 'expo';
 
 const {
   width: SCREEN_WIDTH,
@@ -165,6 +166,7 @@ export const getContacts = async (_callback) => {
 // Get Hookup Details
 export const getHookUpDetails = async (_callback) => {
   let uuid = await AsyncStorage.getItem('uuid');
+  console.log(uuid);
 
   fetch(API_BASE + '/getHookupDetails/' + uuid)
   .then((response) => response.json())

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
-import { Font, Svg } from 'expo';
+import * as Font from 'expo-font';
+import Svg, { Circle, Defs, G, Path, RadialGradient, Stop, TSpan, Use } from 'react-native-svg';
 import { renderFormBackground } from './Renderings';
 import { getContacts, getColor } from '../../Utils/Utils';
-
-const { Circle, Defs, G, Path, RadialGradient, Stop, TSpan, Use } = Svg;
 
 export default class ManageFriendsScreen extends React.Component {
 
@@ -16,7 +15,7 @@ export default class ManageFriendsScreen extends React.Component {
     };
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     //# TO-DO : this should be called even on the return to this page...
     //# TO-DO : Show any errors to user
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { AsyncStorage, Button, Dimensions, Image, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableHighlight, View } from 'react-native';
-import { Font, LinearGradient } from 'expo';
+import * as Font from 'expo-font';
+import { LinearGradient } from 'expo-linear-gradient';
 import { authUser, moderateScale, scale, verticalScale } from '../../Utils/Utils';
 
 const {
@@ -12,6 +13,7 @@ export default class LogInSignUp extends React.Component {
 
 	constructor(props) {
   	super(props);
+    console.log(this, props)
 
   	this.state = {
   	  login: {
@@ -24,7 +26,7 @@ export default class LogInSignUp extends React.Component {
   	};
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     Font.loadAsync({
       'ostrich-sans-rounded': require('../../assets/Fonts/OstrichSansRounded-Medium.otf'),
       'ostrich-sans-heavy': require('../../assets/Fonts/OstrichSans-Heavy.otf'),
@@ -37,8 +39,10 @@ export default class LogInSignUp extends React.Component {
     });
   }
 
+  // # TO-DO : pressing enter on keyboard from password should login
   // # TO-DO : Update this page to be login and signup
   // # TO-DO : Use prop passed to show signup v
+  // # TO-DO : Logging in not progressing to app screen rn
   updateLogin = (key, data) => {
     this.setState({
       login: {

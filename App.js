@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { createStackNavigator, createSwitchNavigator, createAppContainer } from 'react-navigation';
-
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 
 import HomeScreen from './Screens/App/Home';
 import HookUpScreen from './Screens/App/HookUp';
@@ -12,7 +12,6 @@ import LogInSignUp from './Screens/Auth/LogInSignUp';
 import ForgotMyPassword from './Screens/Auth/ForgotMyPassword';
 
 // #TO-DO : different start screen if no friends?
-// #TO-DO : have they logged in?
 // #TO-DO : add app icons to app.json
 
 const AppStack = createStackNavigator(
@@ -33,7 +32,7 @@ const AuthStack = createStackNavigator(
     LogInSignUp: {
       screen: LogInSignUp,
       navigationOptions: () => ({
-        header: null
+        headerShown: false
       }),
     },
     ForgotMyPassword: ForgotMyPassword,

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Button, Image, Picker, Text, TextInput, SafeAreaView, ScrollView, StyleSheet, TouchableHighlight, View } from 'react-native';
-import { Font, Svg } from 'expo';
+import * as Font from 'expo-font';
+import Svg, { Defs, G, Path, RadialGradient, Stop, Use } from 'react-native-svg';
 import { renderBackButton, renderFormBackground } from './Renderings';
 import { getContacts, startHookupTimer, scale, verticalScale } from '../../Utils/Utils';
-
-const { Defs, G, Path, RadialGradient, Stop, Use } = Svg;
 
 export default class HookUpScreen extends React.Component {
   constructor(props) {
@@ -23,7 +22,7 @@ export default class HookUpScreen extends React.Component {
     };
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     Font.loadAsync({
       'ostrich-sans-heavy': require('../../assets/Fonts/OstrichSans-Heavy.otf'),
       'league-mono-light': require('../../assets/Fonts/LeagueMono-Light.otf'),

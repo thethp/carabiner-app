@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { Svg } from 'expo';
-
-const { Defs, G, Path, RadialGradient, Stop, Use } = Svg;
+import Svg, { Defs, G, Path, RadialGradient, Stop, Use } from 'react-native-svg';
 
 export const renderFormBackground = () => {
 
